@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "reach-nft-auction",
+  "private_key_id": "dc8d2e29a1ec89df3b11770fe97b60c731dbf120",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC+YI0c12Dw+Fow\nwReOk+euTM6vn/7w8NF7rqSbZ17dcetidl277s6iU1PFLXq0ndgaKo/YSsekiSd2\nqdzQRLcNR1puxmbce7RL5znp3JQX1u1NTuDNvvjZ97Q4Hq2OA5f3TdYC55n/+GzF\nMX8h/KZ56HS931pEvWT7/glGNry9DBTSM1FzsE+46NQwM/iTQ0DiGaKT2rMAJpFC\n0jeY4yeQC3a9X2JKi4gr5AI2tJVkBqvCLncMWjF/WJGg8clnK219z/zzvcPl1KJV\n3zhw+ryXohdWld2rIeCDFoe1IgAkeZ8rWMBGIgRYSk5HGVha84woo8grPNb6xirQ\nvqTDu7SjAgMBAAECggEAL4T9JCpUncF4Dbxc629awKSWYLsgkTajK2qr1siGIuNJ\nHGIsQnk45cbD3a9c9hGCPAHMtvHvhE/h5FpA7lGAmZVqasUmLrnIBrw4NfojkxHI\nWOgr799P0WRlfS6XJqAaAhZRKZdy1rRFPjF9KNgeG8bcwPor14Wo28eMvBR0pwEa\nPtTeauw8TZge/MxKDF+8QbbeyZ8oIWKIU6DgdEPXC7HhW8eZPJTjT/fCxUDrTViP\ntVIDfivHIoblf3jZtqDbwsngVNX6J1vaIC1kYsCENkfoETy3UhQVX6Rz5j2ecoUE\nehXUjjxsh5S/UKjWFXb0aqCJRCGYNLsyIewy049YRQKBgQD9SD2uSh97/UZUxbkc\nAH22upgnObhjknz1Yi9YkBpnoK8XTT/B4kAjN+MH25QdqNxEOCjQS2QIn840CGqt\nDf3qsSx7mYlMbB0OCunfUEEZygrR4oI3RpUHLw477OXfkeVaLxDHAE+mxzcZHuaq\nF+ziieqHSGCrxSllT3drmJKVzQKBgQDAa4MMgl+ZNv/0U2KNgJ0rjAME9P48C8X0\nUzu3moGiW2+67/C5p6Ih7+EKrZKO91zvdKY/fRQHjQte5ZJqHD7yMG631xD7YO2t\n6QxEAbutwsR8E0PxZ0JP0ldRGZR3BHfJprqoZ1XM32dPFOZi48qQJj9wx0W76/fS\nU+nS9WcELwKBgCzqcLXFw0uToLNL1QXYOHL9KBpcrAxMYAiL/uVvuJ8D6cjyFApn\n+wPD12j/UYbo+RbH9sTpebXl0QV9MJ27y3mhLchFdAmvan+hA9RsQP83yy9pQbpX\ns/nwKFAMNL+u+cNCcXE45ucmkOjNiA5F6+ZImuSeuzX64tpqez0Dc4tJAoGACT4g\n0V0B0o49xTKsLTfcVNco3fgWrjOykoXc/HjDeVUDDOuxmHlg5FhtauHjhFKFeEsW\nIT6U07gGr8w/ODGbJG8HInWGL0z8nbnwCOQ8a6BLZ9pVDSd0m/jykMa1xvHD/z+u\n/5/XEzw37iiG2IEwnbP4oCYyR1CSWtwFA0keZakCgYEAp6sV/FDk7nntbSMwZnaw\nMh6n1vawnR0jvFjPMsaeSywiR/lwKo+n+Cca8yH0UpMM2MkER6IJVBZdZXzBwTuP\nMSYF2gL0yt0dCCKfnQ/kHRJm1v9hz6cou/vulSUhGnJo90v/GI8hdRvA76q7vIXz\nAJR1zlD+fh07c5qMoTDihMs=\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-sogaq@reach-nft-auction.iam.gserviceaccount.com",
+  "client_id": "106937357512610572161",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-sogaq%40reach-nft-auction.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
