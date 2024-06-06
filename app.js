@@ -5,7 +5,7 @@ const cookieParser = require('cookie-parser');
 
 const serviceAccount=require("./service.json")
 const dotenv = require('dotenv').config()
-
+const admin = require("firebase-admin");
 
 const sgMail = require('@sendgrid/mail')
 var key =process.env.API_KEY
