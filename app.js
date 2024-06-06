@@ -13,7 +13,7 @@ console.log(key,"kkk")
 sgMail.setApiKey(key)
 
 const dbRoutes= require('./routes/index');
-const admin = require("firebase-admin");
+
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
 
@@ -22,7 +22,7 @@ admin.initializeApp({
 
 const stripe = require('stripe')('sk_test_51OyumeP6P3n7dzJdRvb0Xeb6Jdfwmsjz2r5BnSzjRGJKXPXm7SBFmU19hfOtORqKOA9JL2b237zARbUvY6VSnZOe008eCdLtfg');
 
-const endpointSecret = 'whsec_d78c84e276a53f09fc210cf3cfae605bea230dd3b5f2006951ef05bb76012937';
+const endpointSecret = process.env.whsec_dyEPPOaGDqgcQVXclbKcDyMx2sEqOFBS
 
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controller/errorController');
@@ -71,7 +71,8 @@ app.post(
        try{
            console.log(session,"sss");
             ( db.collection("orders").doc(session?.metadata?.order_id)).update({
-                paid:true
+                paid:true,
+                status:"completed"
 
              })
         
