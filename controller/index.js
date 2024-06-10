@@ -21,8 +21,8 @@ exports.getLink= async (req, res, next) => {
           const accountLink = await stripe.accountLinks.create({
             account:account?.id,
             
-            refresh_url: 'http://localhost:5173/payment',
-            return_url: 'http://localhost:5173/payment',
+            refresh_url: 'https://kernel-theta.vercel.app/payment',
+            return_url: 'https://kernel-theta.vercel.app/payment',
             type: 'account_onboarding',
           });
           
@@ -47,8 +47,8 @@ exports.getOnboardLink= async (req, res, next) => {
         const accountLink = await stripe.accountLinks.create({
           account:accountId,
           
-          refresh_url: 'http://localhost:5173/payment',
-          return_url: 'http://localhost:5173/payment',
+          refresh_url: 'https://kernel-theta.vercel.app/payment',
+          return_url: 'https://kernel-theta.vercel.app/payment',
           type: 'account_onboarding',
         });
         
@@ -96,8 +96,8 @@ exports.getPaymentLink= async (req, res, next) => {
         },
 
       mode: 'payment',
-      success_url: 'http://localhost:5173/orders',
-      cancel_url: 'http://localhost:5173/orders',
+      success_url: 'https://kernel-theta.vercel.app/orders',
+      cancel_url: 'https://kernel-theta.vercel.app/orders',
     },
     {
       stripeAccount: accountId,
