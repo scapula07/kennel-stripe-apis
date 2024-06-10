@@ -2,6 +2,7 @@
 const express = require('express');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
 
 const serviceAccount=require("./service.json")
 const dotenv = require('dotenv').config()
@@ -39,20 +40,21 @@ app.use(cors({
 app.use(express.static('./public'));
 
 
+console.log(endpointSecret,"secret")
 
 
-
+app.use(bodyParser.raw({ type: 'application/json' }));
 
 
 app.post(
   '/webhook',
   // Stripe requires the raw body to construct the event
-  express.raw({type: 'application/json'}),
+  // express.raw({type: 'application/json'}),
   (req, res) => {
     const sig = req.headers['stripe-signature'];
 
     let event
-
+     console.log(req.body,"body")
     try {
       event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
     } catch (err) {
