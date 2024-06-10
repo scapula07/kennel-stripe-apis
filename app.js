@@ -23,7 +23,7 @@ admin.initializeApp({
 
 const stripe = require('stripe')('sk_test_51OyumeP6P3n7dzJdRvb0Xeb6Jdfwmsjz2r5BnSzjRGJKXPXm7SBFmU19hfOtORqKOA9JL2b237zARbUvY6VSnZOe008eCdLtfg');
 
-const endpointSecret = process.env.STRIPE_SIGNING_SECRET
+const endpointSecret = "whsec_mWVW7D9p5l8dLH8AH4Ykv3tEM87qprDj"
 
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controller/errorController');
