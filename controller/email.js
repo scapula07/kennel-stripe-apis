@@ -8,7 +8,7 @@ console.log(key)
 sgMail.setApiKey(key)
 
 async function sendEmail(body){
-    
+     
     const msg = {
         to: body.receiver, // Change to your recipient
         from: body.sender, // Change to your verified sender

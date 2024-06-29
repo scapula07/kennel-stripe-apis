@@ -43,7 +43,7 @@ app.use(express.static('./public'));
 console.log(endpointSecret,"secret")
 
 
-app.use(bodyParser.raw({ type: 'application/json' }));
+// app.use(bodyParser.raw({ type: 'application/json' }));
 
 
 app.post(
@@ -67,6 +67,7 @@ app.post(
     // Successfully constructed event
     console.log('✅ Success:', event.id);
     const db=admin.firestore();
+   
 
     if (event.type === "checkout.session.completed") {
        const session = event.data.object;
@@ -77,6 +78,8 @@ app.post(
                 status:"completed"
 
              })
+             
+
         
            const result= sendEmail({
             receiver:session?.customer_details?.email,
@@ -96,6 +99,8 @@ app.post(
     res.json({received: true});
   }
 );
+
+
 
 app.use(express.json({ limit: '10kb' }));
 app.use('/api/v1/stripe', dbRoutes);

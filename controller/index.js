@@ -1,11 +1,17 @@
 const dotenv = require('dotenv').config()
-
-
+const {BetaAnalyticsDataClient} = require('@google-analytics/data');
+var email =process.env.CLIENT_EMAIL
+var privatekey =process.env.PRIVATE_KEY
+const analyticsDataClient = new BetaAnalyticsDataClient({credentials:{
+  client_email:email,
+  private_key:privatekey
+                   }});
 const sgMail = require('@sendgrid/mail')
 var key =process.env.API_KEY
+var stripekey =process.env.STRIPE_KEY
 console.log(key)
-sgMail.setApiKey("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")
-const stripe = require('stripe')('sk_test_51OyumeP6P3n7dzJdRvb0Xeb6Jdfwmsjz2r5BnSzjRGJKXPXm7SBFmU19hfOtORqKOA9JL2b237zARbUvY6VSnZOe008eCdLtfg');
+sgMail.setApiKey(key)
+const stripe = require('stripe')(stripekey);
 
 const endpointSecret = 'whsec_d78c84e276a53f09fc210cf3cfae605bea230dd3b5f2006951ef05bb76012937';
 exports.getLink= async (req, res, next) => {
@@ -162,7 +168,7 @@ exports.sendEmail= async (req, res, next) => {
         subject:req.body.subject,
         text:req.body.message,
       }
-      
+      console.log(req.body)
       sgMail
         .send(msg)
         .then((res_) => {
@@ -175,4 +181,39 @@ exports.sendEmail= async (req, res, next) => {
           console.error('Error sending email:', error);
           return res.json({error})
         });
+}
+
+
+
+exports.runReport= async (req, res, next) => {
+    try{
+      const [response] = await analyticsDataClient.runReport({
+        property: `properties/${"328383418"}`,
+        dateRanges: [
+          {
+            startDate: '2024-06-25',
+            endDate: 'today',
+          },
+        ],
+        dimensions: [
+          {
+            name: 'country',
+          },
+        ],
+        metrics: [
+          {
+            name: 'activeUsers',
+          },
+        ],
+      });
+  
+      console.log('Report result:',response);
+      response.rows.forEach((row) => {
+        console.log(row.dimensionValues[0], row.metricValues[0]);
+      });
+
+      res.json({data:response.rows})
+    }catch(e){
+      console.log(e)
+    }
 }
