@@ -23,7 +23,7 @@ admin.initializeApp({
 
 const stripe = require('stripe')('sk_test_51OyumeP6P3n7dzJdRvb0Xeb6Jdfwmsjz2r5BnSzjRGJKXPXm7SBFmU19hfOtORqKOA9JL2b237zARbUvY6VSnZOe008eCdLtfg');
 
-const endpointSecret =process.env.STRIPE_KEY ;
+const endpointSecret =process.env.STRIPE_SIGNING_SECRET ;
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controller/errorController');
 
@@ -71,12 +71,22 @@ app.post(
     if (event.type === "checkout.session.completed") {
        const session = event.data.object;
        try{
-           console.log(session,"sss");
-            ( db.collection("orders").doc(session?.metadata?.order_id)).update({
+             console.log(session,"sss");
+              ( db.collection("orders").doc(session?.metadata?.order_id)).update({
                 paid:true,
                 status:"completed"
 
-             })
+              })
+              // ( db.collection("notifications").doc(session?.metadata?.order_id)).update({
+              //   paid:true,
+              //   status:"completed"
+
+              // })
+              // ( db.collection("notifications").doc(session?.metadata?.order_id)).update({
+              //   paid:true,
+              //   status:"completed"
+
+              // })
              
 
         
