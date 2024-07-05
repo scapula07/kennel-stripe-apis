@@ -13,7 +13,8 @@ console.log(key)
 sgMail.setApiKey(key)
 const stripe = require('stripe')(stripekey);
 
-const endpointSecret = 'whsec_d78c84e276a53f09fc210cf3cfae605bea230dd3b5f2006951ef05bb76012937';
+const endpointSecret =process.env.STRIPE_KEY ;
+console.log(endpointSecret)
 exports.getLink= async (req, res, next) => {
     try{
         
