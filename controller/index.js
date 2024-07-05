@@ -196,14 +196,39 @@ exports.runReport= async (req, res, next) => {
           },
         ],
         dimensions: [
-          {
-            name: 'country',
-          },
+           {
+            name:"itemBrand"
+            },
+            {
+            name:"itemCategory"
+            },
+            {
+            name:"itemCategory2"
+            },
+            {
+            name:"itemId"
+            },
+            {
+            name:"itemName"
+            }
+            
         ],
         metrics: [
-          {
-            name: 'activeUsers',
-          },
+            {
+            "name":"itemRevenue"
+            },
+            {
+            "name":"itemsAddedToCart"
+            },
+            {
+            "name":"itemsCheckedOut"
+            },
+            {
+            "name":"itemsPurchased"
+            },
+            {
+            "name":"itemsViewed"
+            }
         ],
       });
   
