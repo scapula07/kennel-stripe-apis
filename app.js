@@ -73,21 +73,62 @@ app.post(
        try{
              console.log(session,"sss");
               ( db.collection("orders").doc(session?.metadata?.order_id)).update({
-                paid:true,
-                status:"completed"
+                  paid:true,
+                  status:"completed"
 
               })
-              // ( db.collection("notifications").doc(session?.metadata?.order_id)).update({
-              //   paid:true,
-              //   status:"completed"
 
-              // })
-              // ( db.collection("notifications").doc(session?.metadata?.order_id)).update({
-              //   paid:true,
-              //   status:"completed"
-
-              // })
+              (db.collection("transactions").add({
+                  amount:"",
+                  seller:session?.metadata?.seller_id,
+                  customer:session?.metadata?.customer_id,
              
+                  product:{
+                    name:session?.metadata?.product_name,
+                    img:session?.metadata?.img
+                  },
+                
+                date:new Date()
+
+               }))
+              (db.collection("notifications").add({
+                type:"Order update",
+                to:session?.metadata?.customer_id,
+                from:{},
+                order:session?.metadata?.order_id,
+                product:{
+                  name:session?.metadata?.product_name,
+                  img:session?.metadata?.img
+                },
+                msg:"Payment Confirmed!",
+                date:new Date()
+
+               }))
+
+               (db.collection("notifications").add({
+                  type:"Order update",
+                  to:session?.metadata?.seller_id,
+                  from:{},
+                  order:session?.metadata?.order_id,
+                  product:{
+                    name:session?.metadata?.product_name,
+                    img:session?.metadata?.img
+                  }
+                    ,
+                  msg:"Checkout completed!Confirm payment!",
+                  date:new Date()
+
+               })) 
+               
+               ( db.collection("misc").doc(session?.metadata?.seller_id)).update({
+                notifications:true,
+
+              })
+              ( db.collection("misc").doc(session?.metadata?.customer_id)).update({
+                notifications:true,
+
+              })
+
 
         
            const result= sendEmail({

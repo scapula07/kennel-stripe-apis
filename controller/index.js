@@ -78,16 +78,39 @@ exports.getOnboardLink= async (req, res, next) => {
 
 exports.getPaymentLink= async (req, res, next) => {
   try{
-    const {product,accountId,qty,orderId}=req.body
-  
+    const {product,accountId,qty,orderId,customerId,sellerId,rate}=req.body
+    console.log(parseInt(Number(rate?.amount))*100,rate?.amount)
+    const img=product?.images[0]
     const session = await stripe.checkout.sessions.create({
+      shipping_options: [
+        {
+          shipping_rate_data: {
+            type: 'fixed_amount',
+            fixed_amount: {
+              amount: parseInt(Number(rate?.amount))*100,
+              currency: 'usd',
+            },
+            display_name: `${rate?.provider} shipping`,
+            delivery_estimate: {
+              minimum: {
+                unit: 'business_day',
+                value: 1,
+              },
+              maximum: {
+                unit: 'business_day',
+                value: rate?.estimated_days,
+              },
+            },
+          },
+        },
+      ],
       line_items: [
         {
           price_data: {
             currency: 'usd',
             product_data: {
               name: product?.name,
-              image:product?.img
+              images:[img]
             },
             unit_amount:Number(product?.price)*100,
           },
@@ -95,7 +118,12 @@ exports.getPaymentLink= async (req, res, next) => {
         },
       ],
       metadata:{
-        order_id:orderId
+        order_id:orderId,
+        customer_id:customerId,
+        seller_id:sellerId,
+        product_name:product?.name,
+        img:img
+          
       },
 
        payment_intent_data: {
@@ -166,8 +194,11 @@ exports.sendEmail= async (req, res, next) => {
       const msg = {
         to: req.body.receiver, // Change to your recipient
         from: "kennelbreeders@usa.com", // Change to your verified sender
-        subject:req.body.subject,
-        text:req.body.message,
+        templateId:"d-5a550ad4407c473480526ccc59fee4c1",
+        dynamicTemplateData:{
+          name: 'Harry',
+          state:'Shipped'
+          }
       }
       console.log(req.body)
       sgMail
@@ -186,7 +217,7 @@ exports.sendEmail= async (req, res, next) => {
 
 
 
-exports.runReport= async (req, res, next) => {
+exports.runReportUser= async (req, res, next) => {
     try{
       const [response] = await analyticsDataClient.runReport({
         property: `properties/${"328383418"}`,
@@ -197,38 +228,28 @@ exports.runReport= async (req, res, next) => {
           },
         ],
         dimensions: [
-           {
-            name:"itemBrand"
-            },
-            {
-            name:"itemCategory"
-            },
-            {
-            name:"itemCategory2"
-            },
-            {
-            name:"itemId"
-            },
-            {
-            name:"itemName"
-            }
-            
+          //  {
+          //   name:"city"
+          //   }
         ],
         metrics: [
             {
-            "name":"itemRevenue"
+            "name":"activeUsers"
             },
             {
-            "name":"itemsAddedToCart"
+            "name":"firstTimePurchaserRate"
             },
             {
-            "name":"itemsCheckedOut"
+            "name":"newUsers"
             },
             {
-            "name":"itemsPurchased"
+            "name":"totalPurchasers"
             },
             {
-            "name":"itemsViewed"
+            "name":"totalUsers"
+            },
+            {
+            "name":"userEngagementDuration"
             }
         ],
       });
@@ -242,4 +263,68 @@ exports.runReport= async (req, res, next) => {
     }catch(e){
       console.log(e)
     }
+}
+
+
+
+
+
+exports.runReportProducts= async (req, res, next) => {
+  try{
+    const [response] = await analyticsDataClient.runReport({
+      property: `properties/${"328383418"}`,
+      dateRanges: [
+        {
+          startDate: '2024-06-25',
+          endDate: 'today',
+        },
+      ],
+      dimensions: [
+         {
+          name:"itemBrand"
+          },
+          {
+          name:"itemCategory"
+          },
+          {
+          name:"itemCategory2"
+          },
+          {
+          name:"itemId"
+          },
+          {
+          name:"itemName"
+          }
+         
+      
+      ],
+      metrics: [
+       
+          {
+           "name":"itemRevenue"
+          },
+           {
+           "name":"itemsAddedToCart"
+           },
+          {
+           "name":"itemsCheckedOut"
+           },
+           {
+           "name":"itemsPurchased"
+           },
+           {
+           "name":"itemsViewed"
+           }
+      ],
+    });
+
+    console.log('Report result:',response);
+    response.rows.forEach((row) => {
+      console.log(row.dimensionValues[0], row.metricValues[0]);
+    });
+
+    res.json({data:response.rows})
+  }catch(e){
+    console.log(e)
+  }
 }
