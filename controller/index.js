@@ -9,7 +9,7 @@ const analyticsDataClient = new BetaAnalyticsDataClient({credentials:{
 const sgMail = require('@sendgrid/mail')
 var key =process.env.API_KEY
 var stripekey =process.env.STRIPE_KEY
-console.log(key)
+var templateId =process.env.TEMPLATE_ID
 sgMail.setApiKey(key)
 const stripe = require('stripe')(stripekey);
 
@@ -79,7 +79,7 @@ exports.getOnboardLink= async (req, res, next) => {
 exports.getPaymentLink= async (req, res, next) => {
   try{
     const {product,accountId,qty,orderId,customerId,sellerId,rate}=req.body
-    console.log(parseInt(Number(rate?.amount))*100,rate?.amount)
+ 
     const img=product?.images[0]
     const session = await stripe.checkout.sessions.create({
       shipping_options: [
@@ -192,12 +192,14 @@ exports.webhook= async (req, res, next) => {
 
 exports.sendEmail= async (req, res, next) => {
       const msg = {
-        to: req.body.receiver, // Change to your recipient
-        from: "kennelbreeders@usa.com", // Change to your verified sender
-        templateId:"d-5a550ad4407c473480526ccc59fee4c1",
+        to: req.body.receiver, 
+        from: "kennelbreeders@usa.com", 
+        templateId:templateId,
         dynamicTemplateData:{
-          name: 'Harry',
-          state:'Shipped'
+          name:req.body.user,
+          state:req.body.state,
+          orderId:req.body?.orderId,
+          msg:req.body.msg
           }
       }
       console.log(req.body)
@@ -250,6 +252,9 @@ exports.runReportUser= async (req, res, next) => {
             },
             {
             "name":"userEngagementDuration"
+            },
+            {
+              "name":"engagementRate"
             }
         ],
       });
@@ -263,6 +268,41 @@ exports.runReportUser= async (req, res, next) => {
     }catch(e){
       console.log(e)
     }
+}
+
+
+
+exports.runReportCity= async (req, res, next) => {
+  try{
+    const [response] = await analyticsDataClient.runReport({
+      property: `properties/${"328383418"}`,
+      dateRanges: [
+        {
+          startDate: '2024-06-25',
+          endDate: 'today',
+        },
+      ],
+      dimensions: [
+         {
+          name:"city"
+          }
+      ],
+      metrics: [
+          {
+            "name":"engagementRate"
+          }
+       ],
+    });
+
+    console.log('Report result:',response);
+    response.rows.forEach((row) => {
+      console.log(row.dimensionValues[0], row.metricValues[0]);
+    });
+
+    res.json({data:response.rows})
+  }catch(e){
+    console.log(e)
+  }
 }
 
 
@@ -287,16 +327,12 @@ exports.runReportProducts= async (req, res, next) => {
           name:"itemCategory"
           },
           {
-          name:"itemCategory2"
-          },
-          {
           name:"itemId"
           },
           {
           name:"itemName"
-          }
-         
-      
+          },
+       
       ],
       metrics: [
        
